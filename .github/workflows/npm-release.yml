@@ -24,9 +24,15 @@ jobs:
     - name: Run tests
       run: npm test
 
+    - name: Bump patch version
+      run: |
+        npm version patch  # Bump patch version
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git commit -am "ci: bump patch version"  # Commit the version change
+        git push origin HEAD:main --follow-tags  # Push the changes and tags
     - name: Bump version and publish to npm
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
-        npm version patch
         npm publish
