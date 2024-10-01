@@ -1,10 +1,11 @@
 {
   "name": "insize",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A small library to get the memory size of a JavaScript object",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "coverage": "nyc --reporter=text --reporter=lcov npm test"
   },
   "types": "index.d.ts",
   "keywords": [
@@ -14,6 +15,14 @@
     "bytes",
     "kilobytes"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VincenzoManto/insize.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VincenzoManto/insize/issues"
+  },
+  "homepage": "https://github.com/VincenzoManto/insize#readme",
   "author": "Vincenzo Manto",
   "license": "MIT",
   "dependencies": {
@@ -21,6 +30,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.9",
+    "nyc": "^17.1.0",
     "typescript": "^5.6.2"
   }
 }
