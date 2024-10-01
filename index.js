@@ -94,4 +94,4 @@ function getRoughSize(value, seen = new Set()) {
     return bytes;
 }
 
-module.exports = getSize;
+module.exports = insize;
