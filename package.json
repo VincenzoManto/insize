@@ -1,0 +1,26 @@
+{
+  "name": "sizer",
+  "version": "1.1.0",
+  "description": "A small library to get the memory size of a JavaScript object",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "types": "index.d.ts",
+  "keywords": [
+    "size",
+    "memory",
+    "object",
+    "bytes",
+    "kilobytes"
+  ],
+  "author": "Vincenzo Manto",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.9",
+    "typescript": "^5.6.2"
+  }
+}
