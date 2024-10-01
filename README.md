@@ -4,7 +4,6 @@ Welcome to **Insize**! 🎉
 
 insize is a library designed to estimate the memory space occupied by runtime variables. It's like having a tape measure for your code!
 
-![Build Status](https://img.shields.io/github/actions/workflow/status/VincenzoManto/insize/build.yml?branch=main)
 ![Tests](https://img.shields.io/github/actions/workflow/status/VincenzoManto/insize/test.yml?branch=main)
 ![Coverage](https://img.shields.io/codecov/c/github/VincenzoManto/insize)
 ![Downloads](https://img.shields.io/npm/dw/insize)
