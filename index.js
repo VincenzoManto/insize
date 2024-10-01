@@ -7,7 +7,7 @@ const _ = require('lodash'); // Optional: For type checking
  * @param {string} [unit='bytes'] - The unit of measurement ('b' or 'kb' or 'Mb' or 'Gb').
  * @returns {number} - The size of the value in the specified unit.
  */
-function sizer(value, unit = 'b') {
+function insize(value, unit = 'b') {
     const bytes = getRoughSize(value);
     
     if (unit === 'kb') {

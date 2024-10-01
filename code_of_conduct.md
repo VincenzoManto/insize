@@ -1,4 +1,4 @@
-# Sizer Code of Conduct
+# Insize Code of Conduct
 
 ## Our Pledge
 
