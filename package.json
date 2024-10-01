@@ -19,7 +19,18 @@
     "test",
     "modules",
     "runtime",
-    "javascript"
+    "javascript",
+    "sizeof",
+    "sizex",
+    "sizey",
+    "objectsize",
+    "insize",
+    "analyze",
+    "measure",
+    "metrics",
+    "performance",
+    "occupy",
+    "space"
   ],
   "repository": {
     "type": "git",
