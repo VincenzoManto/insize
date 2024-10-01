@@ -1,4 +1,4 @@
-# insiInsizeze
+# Insize
 
 Welcome to **Insize**! 🎉
 
