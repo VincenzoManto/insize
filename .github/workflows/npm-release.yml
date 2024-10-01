@@ -1,7 +1,9 @@
 name: Release npm Package
 
 on:
-  workflow_dispatch:
+  release:
+    types:
+      - published  # Triggers the action only when a new release is published
 
 jobs:
   release:
