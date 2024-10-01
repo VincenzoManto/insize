@@ -1,5 +1,5 @@
 // test.js
-const sizer = require('./index');
+const insize = require('./index');
 
 const testObjects = [
     {
@@ -51,6 +51,6 @@ const testObjects = [
 
 testObjects.forEach(({ description, object }) => {
     console.log(`\n${description}:`);
-    console.log('Size in bytes:', sizer(object));
-    console.log('Size in KB:', sizer(object, 'kb'));
+    console.log('Size in bytes:', insize(object));
+    console.log('Size in KB:', insize(object, 'kb'));
 });

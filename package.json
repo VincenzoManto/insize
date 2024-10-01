@@ -1,5 +1,5 @@
 {
-  "name": "sizer",
+  "name": "insize",
   "version": "1.1.0",
   "description": "A small library to get the memory size of a JavaScript object",
   "main": "index.js",
