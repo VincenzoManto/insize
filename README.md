@@ -4,6 +4,12 @@ Welcome to **Sizer**! 🎉
 
 Sizer is a library designed to estimate the memory space occupied by runtime variables. It's like having a tape measure for your code!
 
+![Build Status](https://img.shields.io/github/actions/workflow/status/VincenzoManto/sizer/build.yml?branch=main)
+![Tests](https://img.shields.io/github/actions/workflow/status/VincenzoManto/sizer/test.yml?branch=main)
+![Coverage](https://img.shields.io/codecov/c/github/VincenzoManto/sizer)
+![Downloads](https://img.shields.io/npm/dw/sizer)
+![License](https://img.shields.io/npm/l/sizer)
+
 ## Why Sizer?
 
 Ever wondered how much memory your variables are hogging? Sizer helps you:
