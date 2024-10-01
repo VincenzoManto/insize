@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node test.js",
     "coverage": "nyc --reporter=text --reporter=lcov npm test",
-    "publish": "npm version patch && npm publish"
+    "publish:npm": "npm version patch && npm publish"
   },
   "types": "index.d.ts",
   "keywords": [
@@ -14,7 +14,12 @@
     "memory",
     "object",
     "bytes",
-    "kilobytes"
+    "kilobytes",
+    "dimensions",
+    "test",
+    "modules",
+    "runtime",
+    "javascript"
   ],
   "repository": {
     "type": "git",
