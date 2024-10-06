@@ -8,7 +8,7 @@ const _ = require('lodash'); // Optional: For type checking
  * @returns {number} - The size of the value in the specified unit.
  */
 function insize(value, unit = 'b') {
-    const bytes = getRoughSize(value);
+    const bytes = calculateSize(value);
     
     if (unit === 'kb') {
         return bytes / 1024;
@@ -21,82 +21,70 @@ function insize(value, unit = 'b') {
     return bytes; // Default is bytes
 }
 
+
 /**
- * Helper function to estimate the size in bytes.
- * @param {any} value - The value to estimate.
- * @param {Set} [seen=new Set()] - A set to track seen objects (for circular references).
- * @returns {number} - Estimated size in bytes.
+ * Estimates the memory size of a JavaScript value in bytes.
+ * @param {*} obj - The value to estimate.
+ * @returns {number} - The size of the value in bytes.
  */
-function getRoughSize(value, seen = new Set()) {
-    if (value === null || value === undefined) {
-        return 0;
+function calculateSize(obj) {
+    const seenObjects = new WeakSet(); // Track seen objects to handle circular references
+    return objectSizer(obj, seenObjects);
+}
+
+/**
+ * Recursively estimates the memory size of a JavaScript object in bytes.
+ * @param {*} obj - The value to estimate.
+ * @param {*} seenObjects - The set of objects that have been seen.
+ * @returns {number} - The size of the value in bytes.
+ */
+function objectSizer(obj, seenObjects) {
+    if (obj === null || obj === undefined) {
+        return 0; // Null or undefined values have no size
     }
 
-    // Handle primitive types
-    const type = typeof value;
     let bytes = 0;
 
-    switch (type) {
-        case 'boolean':
-            bytes += 4;
-            // newer versions of JS engines use 4 bytes for boolean
-            // but older versions used 1 byte
-            break;
-        case 'number':
-            bytes += 8;
-            break;
-        case 'string':
-            bytes += value.length * 2; // Assuming 2 bytes per character
-            // string is 16-bit Unicode, so 2 bytes per character
-            break;
-        case 'symbol':
-            bytes += 20; // Approximate size
-            break;
-        case 'function':
-            bytes += value.toString().length * 2;
-            break;
-        case 'object':
-            if (seen.has(value)) {
-                return 0; // Circular reference detected, skip
-            }
-            seen.add(value);
+    if (typeof obj === 'boolean') {
+        bytes += 4; // Booleans are typically 4 bytes
+    } else if (typeof obj === 'number') {
+        bytes += 8; // Numbers are typically 8 bytes
+    } else if (typeof obj === 'string') {
+        bytes += Buffer.byteLength(obj, 'utf-8'); // Exact size of string
+    } else if (typeof obj === 'symbol') {
+        bytes += Symbol.keyFor(obj)?.length || 0; // Symbol's size depends on its description
+    } else if (typeof obj === 'function') {
+        // Functions are objects but their size in memory is not accessible; count the reference
+        bytes += 64; // Assume a function is 64 bytes overhead
+    } else if (typeof obj === 'object') {
+        if (seenObjects.has(obj)) {
+            return 0; // Avoid circular references
+        }
+        seenObjects.add(obj);
 
-            if (Array.isArray(value)) {
-                value.forEach(item => {
-                    bytes += getRoughSize(item, seen);
-                });
-            } else if (_.isDate(value)) {
-                bytes += 24;
-            } else if (_.isRegExp(value)) {
-                bytes += value.toString().length * 2; // Approximate size - TODO: Improve
-            } else if (_.isMap(value)) {
-                value.forEach((val, key) => {
-                    bytes += getRoughSize(key, seen);
-                    bytes += getRoughSize(val, seen);
-                });
-            } else if (_.isSet(value)) {
-                value.forEach(val => {
-                    bytes += getRoughSize(val, seen);
-                });
-            } else if (Buffer.isBuffer(value)) {
-                bytes += value.length;
-            } else {
-                // Plain object
-                for (const key in value) {
-                    if (Object.prototype.hasOwnProperty.call(value, key)) {
-                        bytes += getRoughSize(key, seen);
-                        bytes += getRoughSize(value[key], seen);
-                    }
-                }
+        if (obj instanceof Map || obj instanceof Set) {
+            // Account for key-value pairs in a map
+            obj.forEach((value, key) => {
+                bytes += objectSizer(key, seenObjects); // Key sizes
+                bytes += objectSizer(value, seenObjects); // Value sizes
+            });
+        } if (obj instanceof Date) {
+            bytes += 64; // Dates are typically 8 bytes
+        } else if (Array.isArray(obj)) {
+            // Account for array elements
+            for (let i = 0; i < obj.length; i++) {
+                bytes += objectSizer(obj[i], seenObjects);
             }
-            break;
-        default:
-            break;
-    }
+        } else {
+            // Account for plain objects and special cases
+            const keys = Reflect.ownKeys(obj); // Include symbol keys and private fields
 
-    // Return 0 for null or undefined
-    if (value === null || value === undefined) {
-        return 0;
+            for (let i = 0; i < keys.length; i++) {
+                const key = keys[i];
+                bytes += objectSizer(key, seenObjects); // Key sizes
+                bytes += objectSizer(obj[key], seenObjects); // Value sizes
+            }
+        }
     }
 
     return bytes;

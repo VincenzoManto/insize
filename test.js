@@ -46,6 +46,32 @@ const testObjects = [
     {
         description: 'Array with mixed types',
         object: [1, 'two', { three: 3 }, [4, 5], new Set([6, 7])]
+    }, 
+    {
+        description: 'Array with circular references',
+        object: (() => {
+            const arr = [1, 2, 3];
+            arr.push(arr);
+            return arr;
+        })()
+    }, 
+    {
+        description: 'Map object',
+        object: new Map([['key1', 'value1'], ['key2', 'value2']])
+    },
+    {
+        description: 'Complex object with symbols',
+        object: {
+            name: "Sample Object",
+            age: 30,
+            date: new Date(),
+            attributes: {
+                height: 180,
+                weight: 75
+            },
+            hobbies: ['reading', 'gaming'],
+            [Symbol('id')]: '123',
+        }
     }
 ];
 
