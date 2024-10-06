@@ -39,12 +39,15 @@ function getRoughSize(value, seen = new Set()) {
     switch (type) {
         case 'boolean':
             bytes += 4;
+            // newer versions of JS engines use 4 bytes for boolean
+            // but older versions used 1 byte
             break;
         case 'number':
             bytes += 8;
             break;
         case 'string':
             bytes += value.length * 2; // Assuming 2 bytes per character
+            // string is 16-bit Unicode, so 2 bytes per character
             break;
         case 'symbol':
             bytes += 20; // Approximate size
@@ -65,7 +68,7 @@ function getRoughSize(value, seen = new Set()) {
             } else if (_.isDate(value)) {
                 bytes += 24;
             } else if (_.isRegExp(value)) {
-                bytes += value.toString().length * 2;
+                bytes += value.toString().length * 2; // Approximate size - TODO: Improve
             } else if (_.isMap(value)) {
                 value.forEach((val, key) => {
                     bytes += getRoughSize(key, seen);
@@ -89,6 +92,11 @@ function getRoughSize(value, seen = new Set()) {
             break;
         default:
             break;
+    }
+
+    // Return 0 for null or undefined
+    if (value === null || value === undefined) {
+        return 0;
     }
 
     return bytes;
