@@ -8,6 +8,7 @@ insize is a library designed to estimate the memory space occupied by runtime va
 ![Coverage](https://img.shields.io/codecov/c/github/VincenzoManto/insize)
 ![Downloads](https://img.shields.io/npm/dw/insize)
 ![License](https://img.shields.io/npm/l/insize)
+![NPM Version](https://img.shields.io/npm/v/insize)
 
 ## Why Insize?
 
