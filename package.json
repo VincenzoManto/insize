@@ -1,12 +1,13 @@
 {
   "name": "insize",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "A small library to get the memory size of a JavaScript object",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js",
+    "test": "mocha test.js",
     "coverage": "nyc --reporter=text --reporter=lcov npm test",
-    "publish:npm": "npm version patch && npm publish"
+    "release": "light-release",
+    "publish:npm": "light-release && npm publish"
   },
   "types": "index.d.ts",
   "keywords": [
@@ -47,6 +48,8 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.9",
+    "light-release": "^2.0.7",
+    "mocha": "^10.7.3",
     "nyc": "^17.1.0",
     "typescript": "^5.6.2"
   }
